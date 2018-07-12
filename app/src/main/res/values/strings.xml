@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Game1</string>
+    <string name="app_name">Magic Ball</string>
     <string name="app_inf">Haga una pregunta cerrada</string>
 
     <string-array name="string_respuesta">

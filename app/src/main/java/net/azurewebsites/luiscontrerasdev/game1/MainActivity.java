@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
                     movimiento++;
                     txtResultado.setText(arrayRespuesta[numeroRandom.nextInt(20)]);
                     txtResultado.startAnimation(salida);
+
                 }
 
                 if (movimiento == 2) {
