@@ -8,13 +8,20 @@ import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.airbnb.lottie.LottieAnimationView;
+
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private Animation salida;
     private Resources resource;
@@ -25,6 +32,11 @@ public class MainActivity extends AppCompatActivity {
     private String[] arrayRespuesta;
     private Random numeroRandom;
     private int movimiento = 0;
+    private Button pausa;
+    private LinearLayout pausaLayout;
+    private LottieAnimationView play;
+    private LottieAnimationView magicBall;
+
     private Typeface font;
 
 
@@ -34,6 +46,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         txtResultado = (TextView)  findViewById(R.id.salida);
+
+        pausa = (Button) findViewById(R.id.btn_pausa);
+
+        pausaLayout = (LinearLayout) findViewById(R.id.pt_pausa);
+        pausaLayout.setVisibility(View.INVISIBLE);
+
+        play = (LottieAnimationView) findViewById(R.id.btn_play);
+        magicBall = (LottieAnimationView) findViewById(R.id.magic_bola);
+
+        pausa.setOnClickListener(this);
+        play.setOnClickListener(this);
+
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
         assert sensorManager != null;
@@ -51,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
 
         salida = AnimationUtils.loadAnimation(MainActivity.this, R.anim.salida);
         txtResultado.startAnimation(salida);
-
 
 
         if (sensor == null)
@@ -105,5 +128,26 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         start();
         super.onResume();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v == pausa){
+            pausa.setVisibility(View.INVISIBLE);
+            pausaLayout.startAnimation(salida);
+            pausaLayout.setVisibility(View.VISIBLE);
+            txtResultado.setVisibility(View.INVISIBLE);
+            magicBall.setVisibility(View.INVISIBLE);
+            stop();
+
+        }
+
+        if(v == play){
+            pausaLayout.setVisibility(View.INVISIBLE);
+            pausa.setVisibility(View.VISIBLE);
+            txtResultado.setVisibility(View.VISIBLE);
+            magicBall.setVisibility(View.VISIBLE);
+            start();
+        }
     }
 }

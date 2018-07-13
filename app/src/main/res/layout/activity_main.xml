@@ -9,8 +9,9 @@
     tools:context=".MainActivity">
 
 
+    
     <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/animation_view"
+        android:id="@+id/magic_bola"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -19,11 +20,12 @@
         app:lottie_autoPlay="true" />
 
     <Button
+        android:id="@+id/btn_pausa"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_alignParentTop="true"
         android:layout_margin="20dp"
-        android:layout_alignRight="@id/animation_view"
+        android:layout_alignRight="@id/magic_bola"
         android:background="@drawable/pause" />
 
     <TextView
@@ -34,5 +36,29 @@
         android:text="@string/app_inf"
         android:textSize="20sp"
         android:layout_centerInParent="true"/>
+
+
+
+    <LinearLayout
+        android:id="@+id/pt_pausa"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="30dp"
+        android:padding="10dp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center">
+
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/btn_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            app:lottie_fileName="play_button.json"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="true" />
+
+    </LinearLayout>
 
 </RelativeLayout>
