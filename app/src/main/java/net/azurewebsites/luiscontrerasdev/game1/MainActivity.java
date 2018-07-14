@@ -15,6 +15,7 @@ import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayout pausaLayout;
     private LottieAnimationView play;
     private LottieAnimationView magicBall;
-
+    private MediaPlayer sound;
     private Typeface font;
 
 
@@ -45,22 +46,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         txtResultado = (TextView)  findViewById(R.id.salida);
-
         pausa = (Button) findViewById(R.id.btn_pausa);
-
         pausaLayout = (LinearLayout) findViewById(R.id.pt_pausa);
-        pausaLayout.setVisibility(View.INVISIBLE);
-
         play = (LottieAnimationView) findViewById(R.id.btn_play);
         magicBall = (LottieAnimationView) findViewById(R.id.magic_bola);
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
+
+        pausaLayout.setVisibility(View.INVISIBLE);
         pausa.setOnClickListener(this);
         play.setOnClickListener(this);
 
-        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
         assert sensorManager != null;
+
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
         resource = getResources();
@@ -90,7 +91,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     movimiento++;
                     txtResultado.setText(arrayRespuesta[numeroRandom.nextInt(20)]);
                     txtResultado.startAnimation(salida);
-
                 }
 
                 if (movimiento == 2) {
@@ -103,19 +103,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         };
+        sound();
     }
 
     public void sound(){
-        MediaPlayer sound = MediaPlayer.create(this, R.raw.sonido);
+        sound = MediaPlayer.create(this, R.raw.audio);
         sound.start();
+        sound.setLooping(true);
     }
 
     private void start() {
         sensorManager.registerListener(sensorEventListener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+
+        pausaLayout.setVisibility(View.INVISIBLE);
+        pausa.setAnimation(salida);
+        pausa.setVisibility(View.VISIBLE);
+        magicBall.setVisibility(View.VISIBLE);
+        magicBall.setVisibility(View.VISIBLE);
+        txtResultado.setVisibility(View.VISIBLE);
+        sound.start();
     }
 
     private void stop() {
         sensorManager.unregisterListener(sensorEventListener);
+
+        pausa.setVisibility(View.INVISIBLE);
+        pausaLayout.startAnimation(salida);
+        pausaLayout.setVisibility(View.VISIBLE);
+        magicBall.setVisibility(View.INVISIBLE);
+        txtResultado.setVisibility(View.INVISIBLE);
+        sound.pause();
     }
 
     @Override
@@ -133,20 +150,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if(v == pausa){
-            pausa.setVisibility(View.INVISIBLE);
-            pausaLayout.startAnimation(salida);
-            pausaLayout.setVisibility(View.VISIBLE);
-            txtResultado.setVisibility(View.INVISIBLE);
-            magicBall.setVisibility(View.INVISIBLE);
-            stop();
-
+           stop();
         }
 
         if(v == play){
-            pausaLayout.setVisibility(View.INVISIBLE);
-            pausa.setVisibility(View.VISIBLE);
-            txtResultado.setVisibility(View.VISIBLE);
-            magicBall.setVisibility(View.VISIBLE);
             start();
         }
     }
