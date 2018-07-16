@@ -15,5 +15,8 @@ Juego de la Bola Magica para android, desarrollando bajo el entorno android stud
 <h2>Pantalla de pausa</h2>
 <img src="/screenshots_magicBall/Screenshot_2018-07-16-01-29-01.png" width="280px" alt="Screenshot de la aplicacion">
 
+Audio de la aplicacion creado por: Efectos de sonido AR /  youtube channel
+
+
 
 
